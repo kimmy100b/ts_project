@@ -1,32 +1,35 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div>
+    <login v-if="!isLogin" ref='isLogin' class="App-login-login"></login>
+    <main-page v-else></main-page>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import { Vue, Component, Prop } from 'vue-property-decorator'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 
-#nav {
-  padding: 30px;
+// import Normal from '@/components/layout/Normal.vue'
+import login from '@/components/login/Login.vue'
+import mainPage from '@/components/main/MainPage.vue'
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+Vue.use(ElementUI)
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+@Component({
+  components: {
+    login: login,
+    'main-page': mainPage
   }
+})
+export default class App extends Vue {
+  @Prop() private isLogin = false
+}
+</script>
+
+<style lang="scss">
+.App-login-login{
+  margin: 15% 25%;
+  width: 50%;
 }
 </style>
