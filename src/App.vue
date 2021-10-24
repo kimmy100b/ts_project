@@ -1,29 +1,40 @@
 <template>
   <div>
-    <login v-if="!isLogin" ref='isLogin' class="App-login-login"></login>
+    <login-page v-if="!isLogin"
+    v-bind:isLogin="isLogin"
+    @setLogin="setLogin"
+    class="App-login-login"
+    ></login-page>
     <main-page v-else></main-page>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import Vue from 'vue'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
-// import Normal from '@/components/layout/Normal.vue'
 import login from '@/components/login/Login.vue'
-import mainPage from '@/components/main/MainPage.vue'
+import main from '@/components/main/Main.vue'
+import { Prop } from 'vue-property-decorator'
 
 Vue.use(ElementUI)
 
-@Component({
+export default {
+  data (): { isLogin: boolean } {
+    return {
+      isLogin: false
+    }
+  },
+  methods: {
+    setLogin (isLogin: boolean): void {
+      this.isLogin = isLogin
+    }
+  },
   components: {
-    login: login,
-    'main-page': mainPage
+    'login-page': login,
+    'main-page': main
   }
-})
-export default class App extends Vue {
-  @Prop() private isLogin = false
 }
 </script>
 

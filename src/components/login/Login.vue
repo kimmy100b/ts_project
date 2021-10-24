@@ -1,7 +1,6 @@
 <template>
     <div>
         <h1>Login</h1>
-        <form>
             <div>
                 <div class="Login-d-label">ID</div>
                 <el-input
@@ -20,30 +19,34 @@
                     v-model="usrPwd"
                 />
             </div>
-        </form>
         <el-button type="primary" @click="login" class="Login-btn-login">Login</el-button>
     </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
-
-@Component
-export default class Login extends Vue {
-    @Prop() private usrId!: string
-    @Prop() private usrPwd!: string
-
-    login (): void { // void가 없을 시
-      if (this.usrId === 'demo') {
-        if (this.usrPwd === '1234') {
-          console.log('로그인 성공')
-        //   this.$emit.isLogin = true
-        //   this.$router.push('main')
-        }
+export default {
+  props: {
+    isLogin: Boolean
+  },
+  data (): { usrId: string; usrPwd: string } {
+    return {
+      usrId: '',
+      usrPwd: ''
+    }
+  },
+  methods: {
+    login (): void {
+      if (this.usrId === 'demo' && this.usrPwd === '1234') {
+        this.$emit('setLogin', true)
+        // console.log("로그인성공");
       } else {
-        alert('아이디 및 비밀번호가 다릅니다.')
+        this.$message({
+          message: 'Login Fail',
+          type: 'error'
+        })
       }
     }
+  }
 }
 </script>
 
